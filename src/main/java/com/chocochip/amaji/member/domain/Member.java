@@ -22,6 +22,7 @@ public class Member {
 
     private String member_email;
 
+    private String member_picture;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
