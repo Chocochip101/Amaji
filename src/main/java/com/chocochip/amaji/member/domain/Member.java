@@ -1,6 +1,8 @@
 package com.chocochip.amaji.member.domain;
 
 import com.chocochip.amaji.global.util.Role;
+import com.chocochip.amaji.oauth.domain.Oauth;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -16,20 +18,44 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
-    private String member_name;
-    @Column(nullable = false)
-    private String member_nickname;
+    @Column(name = "member_name")
+    private String name;
 
-    private String member_email;
+    @Column(name = "member_nickname")
+    private String nickname;
 
-    private String member_picture;
+    @Column(name = "member_email")
+    private String email;
+
+    @Column(name = "member_picture")
+    private String picture;
+
 
     @Enumerated(EnumType.STRING)
+    private Role member_role = Role.GUEST;
+
     @Column(nullable = false)
-    private Role member_role;
+    private boolean isDeleted = Boolean.FALSE;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "oauth_id")
+    private Oauth oauth;
+
+    @Builder
+    public Member(Long id, String name, String nickname, String email, String picture, Role member_role, boolean isDeleted, Oauth oauth) {
+        this.id = id;
+        this.name = name;
+        this.nickname = nickname;
+        this.email = email;
+        this.picture = picture;
+        this.member_role = member_role;
+        this.isDeleted = isDeleted;
+        this.oauth = oauth;
+    }
+
 
     public boolean hasNickname() {
-        return !Objects.isNull(member_nickname);
+        return !Objects.isNull(name);
     }
 
     @Override
@@ -39,4 +65,15 @@ public class Member {
         Member member = (Member) o;
         return Objects.equals(id, member.id);
     }
+
+    public String getRoleKey() {
+        return this.member_role.getKey();
+    }
+
+    public Member update(String name, String email) {
+        this.name = name;
+        this.email = email;
+        return this;
+    }
+
 }
