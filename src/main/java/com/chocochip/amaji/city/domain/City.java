@@ -19,13 +19,13 @@ public class City {
     private Long id;
 
     @Column(name = "city_name")
-    private String name;
+    private CityEnum name;
 
     @OneToMany(mappedBy = "city", cascade = CascadeType.ALL)
     private List<Restaurant> restaurantList = new ArrayList<>();
 
     @Builder
-    public City(Long id, String name, List<Restaurant> restaurantList) {
+    public City(Long id, CityEnum name, List<Restaurant> restaurantList) {
         this.id = id;
         this.name = name;
         this.restaurantList = restaurantList;

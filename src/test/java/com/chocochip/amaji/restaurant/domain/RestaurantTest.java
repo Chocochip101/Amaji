@@ -1,8 +1,7 @@
 package com.chocochip.amaji.restaurant.domain;
 
 import com.chocochip.amaji.city.domain.City;
-import com.chocochip.amaji.global.util.Role;
-import com.chocochip.amaji.member.domain.Member;
+import com.chocochip.amaji.city.domain.CityEnum;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +20,7 @@ class RestaurantTest {
         Double latitude = 24.7;
         Double longitude = 4.37;
 
-        String cityName = "Osaka";
+        CityEnum cityName = CityEnum.OSAKA;
 
         City city = City.builder()
                 .name(cityName).build();

@@ -10,7 +10,7 @@ class CityTest {
     @Test
     public void createCity() throws Exception {
         //given
-        String cityName = "Osaka";
+        CityEnum cityName = CityEnum.OSAKA;
 
         //when
         City city = City.builder()
