@@ -25,4 +25,18 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
                 .stream().findAny();
     }
 
+    public Long updateMemberNickname(Long memberId, String nickname){
+        return queryFactory
+                .update(member)
+                .where(member.id.eq(memberId))
+                .set(member.nickname, nickname)
+                .execute();
+    }
+
+    public Optional<Member> findOneMemberByMemberId(Long memberId){
+        return queryFactory
+                .selectFrom(member)
+                .where(member.id.eq(memberId))
+                .stream().findAny();
+    }
 }

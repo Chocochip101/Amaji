@@ -8,4 +8,7 @@ import java.util.Optional;
 public interface MemberRepositoryCustom {
     Optional<Member> findByEmailAndProvider(String email, OAuthProvider provider);
 
+    Long updateMemberNickname(Long memberId, String nickname);
+
+    Optional<Member> findOneMemberByMemberId(Long memberId);
 }
