@@ -1,4 +1,4 @@
-package com.chocochip.amaji.menuresturant.domain;
+package com.chocochip.amaji.menuResturant.domain;
 
 import com.chocochip.amaji.restaurant.domain.Restaurant;
 import lombok.Getter;

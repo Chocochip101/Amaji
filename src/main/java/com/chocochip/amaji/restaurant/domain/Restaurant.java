@@ -2,7 +2,7 @@ package com.chocochip.amaji.restaurant.domain;
 
 import com.chocochip.amaji.city.domain.City;
 import com.chocochip.amaji.member.domain.Member;
-import com.chocochip.amaji.menuresturant.domain.MenuRestaurant;
+import com.chocochip.amaji.menuResturant.domain.MenuRestaurant;
 import com.chocochip.amaji.review.domain.Review;
 import lombok.Builder;
 import lombok.Getter;
