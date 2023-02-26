@@ -1,7 +1,6 @@
 package com.chocochip.amaji.city.service;
 
 import com.chocochip.amaji.city.domain.City;
-import com.chocochip.amaji.city.domain.CityEnum;
 import com.chocochip.amaji.city.domain.repository.CityRepository;
 import com.chocochip.amaji.city.mapper.CityMapper;
 import com.chocochip.amaji.city.ui.dto.CityResponse;
@@ -23,6 +22,6 @@ public class CityService {
 
     public List<CityResponse> findAllCities(){
         List<City> cityList = cityRepository.findAll();
-        return cityList.stream().map(c -> CityMapper.INSTANCE.cityEntityToResponse(c)).collect(Collectors.toList());
+        return cityList.stream().map(CityMapper.INSTANCE::cityEntityToResponse).collect(Collectors.toList());
     }
 }
