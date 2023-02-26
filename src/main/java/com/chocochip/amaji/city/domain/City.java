@@ -1,5 +1,6 @@
 package com.chocochip.amaji.city.domain;
 
+import com.chocochip.amaji.global.util.CityEnum;
 import com.chocochip.amaji.restaurant.domain.Restaurant;
 import lombok.Builder;
 import lombok.Getter;

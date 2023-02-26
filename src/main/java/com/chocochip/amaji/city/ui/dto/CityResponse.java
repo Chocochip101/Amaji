@@ -1,7 +1,7 @@
 package com.chocochip.amaji.city.ui.dto;
 
 
-import com.chocochip.amaji.city.domain.CityEnum;
+import com.chocochip.amaji.global.util.CityEnum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

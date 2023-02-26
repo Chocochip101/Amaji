@@ -1,7 +1,7 @@
 package com.chocochip.amaji.city.domain.repository;
 
 import com.chocochip.amaji.city.domain.City;
-import com.chocochip.amaji.city.domain.CityEnum;
+import com.chocochip.amaji.global.util.CityEnum;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
