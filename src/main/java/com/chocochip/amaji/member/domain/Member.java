@@ -47,7 +47,7 @@ public class Member {
     private Oauth oauth;
 
     //=========  일대다   =========//
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MemberRestaurant> memberRestaurantList = new ArrayList<>();
 
     @Builder
