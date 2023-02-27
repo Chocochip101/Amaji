@@ -29,16 +29,13 @@ public class Restaurant {
 
     private Double latitude;
 
-    @Column(name = "restaurant_name")
+    @Column(name = "restaurant_address")
     private String address;
 
     @Column(name = "restaurant_rating")
     private Double rating;
 
     //=========  다대일   =========//
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id")
@@ -56,14 +53,13 @@ public class Restaurant {
 
 
     @Builder
-    public Restaurant(Long id, String name, Double longitude, Double latitude, String address, Double rating, Member member, City city, List<RestaurantPicture> restaurantPictures, List<Review> reviewList) {
+    public Restaurant(Long id, String name, Double longitude, Double latitude, String address, Double rating, City city, List<RestaurantPicture> restaurantPictures, List<Review> reviewList) {
         this.id = id;
         this.name = name;
         this.longitude = longitude;
         this.latitude = latitude;
         this.address = address;
         this.rating = rating;
-        this.member = member;
         this.city = city;
         this.restaurantPictures = restaurantPictures;
         this.reviewList = reviewList;
