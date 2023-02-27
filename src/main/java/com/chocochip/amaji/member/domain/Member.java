@@ -1,12 +1,17 @@
 package com.chocochip.amaji.member.domain;
 
 import com.chocochip.amaji.global.util.Role;
+import com.chocochip.amaji.memberRestaurant.domain.MemberRestaurant;
+import com.chocochip.amaji.menuResturant.domain.MenuRestaurant;
 import com.chocochip.amaji.oauth.domain.Oauth;
+import com.chocochip.amaji.restaurant.domain.Restaurant;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -40,6 +45,10 @@ public class Member {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "oauth_id")
     private Oauth oauth;
+
+    //=========  일대다   =========//
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MemberRestaurant> memberRestaurantList = new ArrayList<>();
 
     @Builder
     public Member(Long id, String name, String nickname, String email, String picture, Role member_role, boolean isDeleted, Oauth oauth) {

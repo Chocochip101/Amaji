@@ -11,6 +11,9 @@ import springfox.documentation.spring.web.plugins.Docket;
 
 @Configuration
 public class SwaggerConfig {
+
+    private String version = "V1";
+    private String title = "Amaji Rest API Documentation " + version;
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.OAS_30)
@@ -24,9 +27,9 @@ public class SwaggerConfig {
 
     public ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Mini Greeting Rest API Documentation")
-                .description("mini greeting rest api.")
-                .version("0.1")
+                .title(title)
+                .description("amaji greeting rest api.")
+                .version(version)
                 .build();
     }
 }
