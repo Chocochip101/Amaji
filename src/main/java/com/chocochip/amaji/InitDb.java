@@ -41,7 +41,7 @@ public class InitDb {
             City city = getCity(CityEnum.OSAKA);
             cityRepository.save(city);
 
-            Restaurant restaurant = getRestaurant(city, 1L, "서울 규카츠", "서울특별시 광진구 광나루로", 4.5, 111.11, 222.22);
+            Restaurant restaurant = getRestaurant(city, 1L, "이치란 도톤보리점 별관", "1 Chome-4-16 Dotonbori, Chuo Ward, Osaka, 542-0071 일본", 4.5, 135.50326712710788, 34.66865115940998 );
             restaurantRepository.save(restaurant);
         }
 
