@@ -1,6 +1,7 @@
 package com.chocochip.amaji.member.domain;
 
 import com.chocochip.amaji.global.util.Role;
+import com.chocochip.amaji.menuResturant.domain.MenuRestaurant;
 import com.chocochip.amaji.oauth.domain.Oauth;
 import com.chocochip.amaji.restaurant.domain.Restaurant;
 import lombok.Builder;
@@ -46,7 +47,7 @@ public class Member {
 
     //=========  일대다   =========//
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<Restaurant> restaurantList = new ArrayList<>();
+    private List<MenuRestaurant> menuRestaurantList = new ArrayList<>();
 
     @Builder
     public Member(Long id, String name, String nickname, String email, String picture, Role member_role, boolean isDeleted, Oauth oauth) {
