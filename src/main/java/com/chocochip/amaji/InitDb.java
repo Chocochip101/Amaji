@@ -38,11 +38,17 @@ public class InitDb {
             Member member1 = getBuild(1L, "권기호", "dev.chocochip@gmail.com", "chocochip", "aaa", Role.USER);
             memberRepository.save(member1);
 
-            City city = getCity(CityEnum.OSAKA);
-            cityRepository.save(city);
+            City cityOsaka = getCity(CityEnum.OSAKA);
+            cityRepository.save(cityOsaka);
 
-            Restaurant restaurant = getRestaurant(city, 1L, "이치란 도톤보리점 별관", "1 Chome-4-16 Dotonbori, Chuo Ward, Osaka, 542-0071 일본", 4.5, 135.50326712710788, 34.66865115940998 );
-            restaurantRepository.save(restaurant);
+            City cityTokyo = getCity(CityEnum.TOKYO);
+            cityRepository.save(cityTokyo);
+
+            Restaurant restaurant1 = getRestaurant(cityOsaka, 1L, "이치란 도톤보리점 별관", "1 Chome-4-16 Dotonbori, Chuo Ward, Osaka, 542-0071 일본", 4.5, 135.50326712710788, 34.66865115940998 );
+            restaurantRepository.save(restaurant1);
+
+            Restaurant restaurant2 = getRestaurant(cityTokyo, 2L, "토리카츠 치킨 시부야", "일본 〒150-0043 Tokyo, Shibuya City, Dogenzaka, 2 Chome−16−19 都路ビル 2F", 4.0, 139.69753829454956,35.66100801163414);
+            restaurantRepository.save(restaurant2);
         }
 
         private static City getCity(CityEnum cityName) {
