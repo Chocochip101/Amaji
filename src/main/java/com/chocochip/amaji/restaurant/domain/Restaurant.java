@@ -2,6 +2,7 @@ package com.chocochip.amaji.restaurant.domain;
 
 import com.chocochip.amaji.city.domain.City;
 import com.chocochip.amaji.member.domain.Member;
+import com.chocochip.amaji.memberRestaurant.domain.MemberRestaurant;
 import com.chocochip.amaji.menuResturant.domain.MenuRestaurant;
 import com.chocochip.amaji.review.domain.Review;
 import lombok.Builder;
@@ -51,6 +52,8 @@ public class Restaurant {
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     private List<MenuRestaurant> menuRestaurantList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MemberRestaurant> memberRestaurantList = new ArrayList<>();
 
     @Builder
     public Restaurant(Long id, String name, Double longitude, Double latitude, String address, Double rating, City city, List<RestaurantPicture> restaurantPictures, List<Review> reviewList) {
