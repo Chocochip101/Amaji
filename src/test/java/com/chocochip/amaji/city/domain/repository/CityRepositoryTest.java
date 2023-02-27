@@ -11,8 +11,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @DataJpaTest
 class CityRepositoryTest {
     @Autowired

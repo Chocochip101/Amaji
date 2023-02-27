@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class RestaurantTest {
 
     @DisplayName("식당을 빌더 패턴을 활용하여 생성할 수 있다")
