@@ -2,6 +2,7 @@ package com.chocochip.amaji.menuResturant.domain;
 
 import com.chocochip.amaji.menu.domain.Menu;
 import com.chocochip.amaji.restaurant.domain.Restaurant;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -27,4 +28,11 @@ public class MenuRestaurant {
     @Enumerated(EnumType.STRING)
     private MenuSort menu_sort = MenuSort.ETC; //메뉴의 종류
 
+    @Builder
+    public MenuRestaurant(Long id, Restaurant restaurant, Menu menu, MenuSort menu_sort) {
+        this.id = id;
+        this.menu = menu;
+        this.restaurant = restaurant;
+        this.menu_sort = menu_sort;
+    }
 }
