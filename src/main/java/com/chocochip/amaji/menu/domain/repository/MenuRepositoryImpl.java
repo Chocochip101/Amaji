@@ -1,4 +1,4 @@
 package com.chocochip.amaji.menu.domain.repository;
 
-public class MenuRepositoryImpl {
+public class MenuRepositoryImpl implements MenuRepositoryCustom{
 }
