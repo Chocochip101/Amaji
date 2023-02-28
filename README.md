@@ -1,6 +1,10 @@
 # Amaji
 
-일본 음식점 정보가 보기 불편해.
+Atmosphere of serenity,
+Mouth-watering sushi rolls,
+Authentic flavors from Japan,
+Japanese hospitality at its best,
+Immerse in the experience.
 
 ---
 
