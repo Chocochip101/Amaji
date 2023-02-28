@@ -5,6 +5,9 @@ import com.chocochip.amaji.exception.ErrorType;
 import com.chocochip.amaji.global.util.CityEnum;
 import com.chocochip.amaji.member.domain.Member;
 import com.chocochip.amaji.memberRestaurant.domain.MemberRestaurant;
+import com.chocochip.amaji.menu.domain.Menu;
+import com.chocochip.amaji.menuResturant.domain.MenuRestaurant;
+import com.chocochip.amaji.menuResturant.domain.dto.MenuRestaurantRepository;
 import com.chocochip.amaji.restaurant.domain.Restaurant;
 import com.chocochip.amaji.restaurant.domain.RestaurantPicture;
 import com.chocochip.amaji.restaurant.domain.repository.RestaurantRepository;
@@ -28,6 +31,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class RestaurantService {
     private final RestaurantRepository restaurantRepository;
+    private final MenuRestaurantRepository menuRestaurantRepository;
 
     public List<RestaurantResponse> findRestaurant(String cityName){
         if(cityName == null){
@@ -61,7 +65,7 @@ public class RestaurantService {
 
     public RestaurantDetailResponse findRestaurantDetail(Long restaurantId) {
         Optional<Restaurant> restaurant = restaurantRepository.findById(restaurantId);
-
+        List<Menu> menuList = menuRestaurantRepository.findMenuByRestaurantId(restaurantId);
         return new RestaurantDetailResponse(
                 restaurant.get().getName(),
                 restaurant.get().getAddress(),
@@ -69,7 +73,8 @@ public class RestaurantService {
                 restaurant.get().getLatitude(),
                 restaurant.get().getRating(),
                 restaurant.get().getRestaurantPictures().stream().map(RestaurantPicture::getUrl).collect(Collectors.toList()),
-                restaurant.get().getReviewList().stream().map(Review::getUrl).collect(Collectors.toList()));
+                restaurant.get().getReviewList().stream().map(Review::getUrl).collect(Collectors.toList()),
+                menuList.stream().map(Menu::getName).collect(Collectors.toList()));
     }
 
 }
