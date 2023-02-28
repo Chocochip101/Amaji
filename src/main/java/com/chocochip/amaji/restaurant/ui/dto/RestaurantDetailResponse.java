@@ -24,8 +24,10 @@ public class RestaurantDetailResponse {
 
     private List<String> restaurant_review_url;
 
+    private List<String> menu_name;
 
-    public RestaurantDetailResponse(String restaurant_name, String restaurant_address, Double longitude, Double latitude, Double rating, List<String> restaurant_photo_url, List<String> restaurant_review_url) {
+    public RestaurantDetailResponse(String restaurant_name, String restaurant_address, Double longitude, Double latitude, Double rating,
+                                    List<String> restaurant_photo_url, List<String> restaurant_review_url, List<String> menu_name) {
         this.restaurant_name = restaurant_name;
         this.restaurant_address = restaurant_address;
         this.longitude = longitude;
@@ -33,5 +35,6 @@ public class RestaurantDetailResponse {
         this.rating = rating;
         this.restaurant_photo_url = restaurant_photo_url;
         this.restaurant_review_url = restaurant_review_url;
+        this.menu_name = menu_name;
     }
 }

@@ -23,7 +23,7 @@ public class Restaurant {
     @Column(name = "restaurant_id")
     private Long id;
 
-    @Column(name = "city_name")
+    @Column(name = "restaurant_name")
     private String name;
 
     private Double longitude;
