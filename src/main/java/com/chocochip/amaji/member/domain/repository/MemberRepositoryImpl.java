@@ -1,7 +1,7 @@
 package com.chocochip.amaji.member.domain.repository;
 
 import com.chocochip.amaji.member.domain.Member;
-import com.chocochip.amaji.security.custom.OAuthProvider;
+import com.chocochip.amaji.oauth.domain.AuthProvider;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Repository;
 
@@ -18,10 +18,10 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
         this.queryFactory = new JPAQueryFactory(em);
     }
 
-    public Optional<Member> findByEmailAndProvider(String email, OAuthProvider provider){
+    public Optional<Member> findByEmailAndProvider(String email, AuthProvider provider){
         return queryFactory
                 .selectFrom(member)
-                .where(member.email.eq(email), member.oauth.provider.eq(provider))
+                .where(member.email.eq(email), member.authProvider.eq(provider))
                 .stream().findAny();
     }
 
@@ -38,5 +38,21 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
                 .selectFrom(member)
                 .where(member.id.eq(memberId))
                 .stream().findAny();
+    }
+
+    public String getRefreshTokenById(Long id){
+        return queryFactory
+                .select(member.refreshToken)
+                .from(member)
+                .where(member.id.eq(id))
+                .fetchOne();
+    }
+
+    public void updateRefreshToken(Long id, String token){
+        queryFactory
+                .update(member)
+                .where(member.id.eq(id))
+                .set(member.refreshToken, token)
+                .execute();
     }
 }
