@@ -1,44 +1,89 @@
 package com.chocochip.amaji.security.config;
 
 import com.chocochip.amaji.exception.ExceptionResponse;
-import com.chocochip.amaji.oauth.service.OAuthService;
+import com.chocochip.amaji.oauth.domain.repository.CookieAuthorizationRequestRepository;
+import com.chocochip.amaji.oauth.handler.OAuth2AuthenticationFailureHandler;
+import com.chocochip.amaji.oauth.handler.OAuth2AuthenticationSuccessHandler;
+import com.chocochip.amaji.oauth.service.CustomOAuth2UserService;
+import com.chocochip.amaji.security.custom.JwtAccessDeniedHandler;
+import com.chocochip.amaji.security.custom.JwtAuthenticationEntryPoint;
+import com.chocochip.amaji.security.custom.JwtAuthenticationFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Configuration;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static com.chocochip.amaji.exception.ErrorType.SECURITY_EXCEPTION;
 
-@EnableWebSecurity //spring security 설정을 활성화시켜주는 어노테이션
-@RequiredArgsConstructor //final 필드 생성자 만들어줌
+@Configuration
+@EnableWebSecurity
+@Log4j2
+@RequiredArgsConstructor
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final OAuthService oAuthService;
+    private final CustomOAuth2UserService customOAuth2UserService;
+    private final CookieAuthorizationRequestRepository cookieAuthorizationRequestRepository;
+    private final OAuth2AuthenticationSuccessHandler authenticationSuccessHandler;
+    private final OAuth2AuthenticationFailureHandler authenticationFailureHandler;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
     private final ObjectMapper objectMapper;
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/h2-console/**", "/favicon.ico");
+    }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
-                .headers().frameOptions().disable()
-                .and()
-                .logout().logoutSuccessUrl("/") //logout 요청시 홈으로 이동 - 기본 logout url = "/logout"
-                .and()
-                .oauth2Login() //OAuth2 로그인 설정 시작점
-                .defaultSuccessUrl("/oauth/loginInfo", true) //OAuth2 성공시 redirect
-                .userInfoEndpoint() //OAuth2 로그인 성공 이후 사용자 정보를 가져올 때 설정 담당
-                .userService(oAuthService); //OAuth2 로그인 성공 시, 작업을 진행할 MemberService
+        http.authorizeRequests()
+                .antMatchers("/h2-console/**").permitAll()
+                .antMatchers("/oauth2/**", "/auth/**", "/login/**").permitAll()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .anyRequest().authenticated();
 
+        http.cors()                         // CORS on
+                .and()
+                .csrf().disable()           // CSRF off
+                .httpBasic().disable()      // Basic Auth off
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);    // Session off
+
+        http.formLogin().disable()
+                .oauth2Login()
+                .authorizationEndpoint()
+                .baseUri("/oauth2/authorize")
+                .authorizationRequestRepository(cookieAuthorizationRequestRepository)
+                .and()
+                .redirectionEndpoint()
+                .baseUri("/oauth2/callback/*")
+                .and()
+                .userInfoEndpoint()
+                .userService(customOAuth2UserService)
+                .and()
+                .successHandler(authenticationSuccessHandler)
+                .failureHandler(authenticationFailureHandler);
+
+        http.exceptionHandling()
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)	// 401
+                .accessDeniedHandler(jwtAccessDeniedHandler);		// 403
+
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         securityExceptionHandlingConfig(http);
     }
+
     private void securityExceptionHandlingConfig(HttpSecurity http) throws Exception {
         http.exceptionHandling()
                 .authenticationEntryPoint(
